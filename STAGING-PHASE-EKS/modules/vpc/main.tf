@@ -37,11 +37,12 @@ resource "aws_subnet" "private" {
 
 # Elastic IP for NAT
 resource "aws_eip" "nat" {
-  count = length(var.private_subnet_cidrs)
-  vpc   = true
+  count  = length(var.private_subnet_cidrs)
+  domain = "vpc"
 
   tags = merge({ Name = "${var.name}-eip-nat-${count.index}" }, var.tags)
 }
+
 
 # NAT Gateway
 resource "aws_nat_gateway" "this" {
